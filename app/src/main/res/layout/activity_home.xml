@@ -90,6 +90,7 @@
             app:fabSize="mini"
             android:tint="@android:color/white"
             app:srcCompat="@android:drawable/ic_input_add"
+            android:transitionName="found_fab"
             android:id="@+id/found_fab"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"

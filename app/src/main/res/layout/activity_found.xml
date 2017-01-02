@@ -9,30 +9,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimary"
     tools:context="com.example.cal13.found.found">
 
-    <Button
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:id="@+id/settings"
-        android:alpha=".25"
-        android:background="@drawable/ic_settings_black" />
-    <Button
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@id/settings"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="40dp"
-        android:id="@+id/inbox"
-        android:alpha=".25"
-        android:backgroundTint="@color/colorPrimary"
-        android:background="@android:drawable/ic_dialog_email" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:elevation="0dp"
+        android:layout_centerInParent="true"
+        android:transitionName="found_fab"
+        android:id="@+id/found_fab"/>
 
     <TextView
         android:text="@string/found"
@@ -46,71 +34,90 @@
         android:textSize="50sp"
         android:id="@+id/homeBottomText" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/homeBottomText"
-        android:inputType="text"
-        android:textSize="15sp"
-        android:text="@string/found_name"
-        android:ems="10"
-        android:textColor="@color/foundText"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/found_edittext_border"
-        android:id="@+id/found_name_input" />
+    <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:id="@+id/settings"
+        android:alpha=".25"
+        android:background="@drawable/ic_settings_black" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/found_name_input"
-        android:layout_marginTop="20dp"
-        android:inputType="text"
-        android:textSize="15sp"
-        android:text="@string/found_location"
-        android:ems="10"
-        android:textColor="@color/foundText"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/found_edittext_border"
-        android:id="@+id/found_location_input" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="225dp"
-        android:layout_below="@id/found_location_input"
-        android:layout_marginTop="20dp"
-        android:inputType="textMultiLine"
-        android:textSize="15sp"
-        android:text="@string/found_description"
-        android:ems="10"
-        android:textColor="@color/foundText"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/found_edittext_border"
-        android:id="@+id/found_description_input" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="normal"
+    <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@id/settings"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/inbox"
+        android:alpha=".25"
         android:backgroundTint="@color/colorPrimary"
+        android:background="@android:drawable/ic_dialog_email" />
 
-        app:srcCompat="@drawable/ic_add_a_photo_white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:id="@+id/add_image" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/homeBottomText"
+        android:id="@+id/activity_found_container">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+
+            android:inputType="text"
+            android:textSize="15sp"
+            android:hint="@string/found_name"
+            android:ems="10"
+            android:textColor="@color/foundText"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/found_edittext_border"
+            android:id="@+id/found_name_input" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@id/found_name_input"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:hint="@string/found_location"
+            android:ems="10"
+            android:textColor="@color/foundText"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/found_edittext_border"
+            android:id="@+id/found_location_input" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_below="@id/found_location_input"
+            android:layout_marginTop="20dp"
+            android:inputType="textMultiLine"
+            android:textSize="15sp"
+            android:hint="@string/found_description"
+            android:ems="10"
+            android:textColor="@color/foundText"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/found_edittext_border"
+            android:id="@+id/found_description_input" />
+    </RelativeLayout>
 
 
 </RelativeLayout>
