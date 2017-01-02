@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Found</string>
+    <string name="lost">lost</string>
+    <string name="found">found.</string>
+
+    <string name="found_name">Found Item</string>
+    <string name="found_location">Location of Found Item</string>
+    <string name="found_description">Description of Found Item</string>
+</resources>

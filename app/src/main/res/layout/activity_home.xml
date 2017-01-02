@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:baselineAligned="false"
+    tools:context="com.example.cal13.found.home">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:id="@+id/lost_layout">
+
+        <TextView
+            android:text="@string/lost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="50sp"
+            android:textColor="@color/homeText"
+            android:transitionName="homeTopText"
+            android:id="@+id/homeTopText" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            android:tint="@android:color/white"
+            android:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_chevron_right_black"
+            android:id="@+id/lost_fab"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="35dp" />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/settings"
+            android:alpha=".25"
+            android:background="@drawable/ic_settings_black" />
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@id/settings"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:id="@+id/inbox"
+            android:alpha=".25"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@android:drawable/ic_dialog_email" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:id="@+id/found_layout">
+
+        <TextView
+            android:text="@string/found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/homeText"
+            android:transitionName="homeBottomText"
+            android:textSize="50sp"
+            android:id="@+id/homeBottomText" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            android:tint="@android:color/white"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:id="@+id/found_fab"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="35dp" />
+    </RelativeLayout>
+</LinearLayout>

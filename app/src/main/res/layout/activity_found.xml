@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_found"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorAccent"
+    tools:context="com.example.cal13.found.found">
+
+    <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:id="@+id/settings"
+        android:alpha=".25"
+        android:background="@drawable/ic_settings_black" />
+    <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@id/settings"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/inbox"
+        android:alpha=".25"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@android:drawable/ic_dialog_email" />
+
+    <TextView
+        android:text="@string/found"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/homeText"
+        android:transitionName="homeBottomText"
+        android:textSize="50sp"
+        android:id="@+id/homeBottomText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/homeBottomText"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:text="@string/found_name"
+        android:ems="10"
+        android:textColor="@color/foundText"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/found_edittext_border"
+        android:id="@+id/found_name_input" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/found_name_input"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:text="@string/found_location"
+        android:ems="10"
+        android:textColor="@color/foundText"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/found_edittext_border"
+        android:id="@+id/found_location_input" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_below="@id/found_location_input"
+        android:layout_marginTop="20dp"
+        android:inputType="textMultiLine"
+        android:textSize="15sp"
+        android:text="@string/found_description"
+        android:ems="10"
+        android:textColor="@color/foundText"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/found_edittext_border"
+        android:id="@+id/found_description_input" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        android:backgroundTint="@color/colorPrimary"
+
+        app:srcCompat="@drawable/ic_add_a_photo_white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:id="@+id/add_image" />
+
+
+</RelativeLayout>
