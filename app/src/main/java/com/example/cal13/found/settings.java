@@ -49,6 +49,7 @@ public class settings extends AppCompatActivity
 
         TextWatcher t= new TextWatcher()
         {
+            int c=0;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -57,8 +58,15 @@ public class settings extends AppCompatActivity
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                Button b = (Button) findViewById(R.id.save);
-                b.setVisibility(View.VISIBLE);
+                if (c>2)
+                {
+
+                    Button b = (Button) findViewById(R.id.save);
+                    b.setVisibility(View.VISIBLE);
+                }
+                else
+                    c++;
+
             }
 
             @Override
@@ -75,7 +83,7 @@ public class settings extends AppCompatActivity
         /*
             Saves data to FIREBASE database if possible. Displays toast with status
          */
-        Button b = (Button) findViewById(R.id.save);
+        final Button b = (Button) findViewById(R.id.save);
         b.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -107,6 +115,9 @@ public class settings extends AppCompatActivity
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
+
+                    b.setVisibility(View.GONE);
+
                 }
                 else
                 {
@@ -130,9 +141,15 @@ public class settings extends AppCompatActivity
 
                 if (u!=null)
                 {
-                    name.setText(u.name);
-                    email.setText(u.email);
-                    number.setText(u.number);
+                    if (name.getText().toString().compareTo(u.name)!=0)
+                        name.setText(u.name);
+
+                    if (email.getText().toString().compareTo(u.email)!=0)
+                        email.setText(u.email);
+
+                    if (number.getText().toString().compareTo(u.number)!=0)
+                        number.setText(u.number);
+
                 }
             }
 
