@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimary"
+    android:background="@color/activityBackground"
     tools:context="com.example.cal13.found.found">
 
     <android.support.design.widget.FloatingActionButton
@@ -32,7 +32,7 @@
         android:textColor="@color/homeText"
         android:transitionName="homeBottomText"
         android:textSize="50sp"
-        android:id="@+id/homeBottomText" />
+        android:id="@+id/foundText" />
 
     <Button
         android:layout_width="25dp"
@@ -62,7 +62,7 @@
         android:layout_height="match_parent"
         android:visibility="invisible"
         android:background="@color/colorAccent"
-        android:layout_below="@id/homeBottomText"
+        android:layout_below="@id/foundText"
         android:id="@+id/activity_found_container">
 
         <EditText

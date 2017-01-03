@@ -5,4 +5,5 @@
     <color name="colorAccent">#C7D22C</color>
     <color name="foundText">#848484</color>
     <color name="homeText">#ffffff</color>
+    <color name ="activityBackground">#455A64</color>
 </resources>

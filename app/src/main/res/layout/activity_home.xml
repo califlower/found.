@@ -24,8 +24,8 @@
             android:layout_centerHorizontal="true"
             android:textSize="50sp"
             android:textColor="@color/homeText"
-            android:transitionName="homeTopText"
-            android:id="@+id/homeTopText" />
+            android:transitionName="lostText"
+            android:id="@+id/lostText" />
 
 
         <android.support.design.widget.FloatingActionButton
@@ -39,6 +39,7 @@
             android:id="@+id/lost_fab"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:transitionName="lost_fab"
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="35dp" />
 
@@ -79,9 +80,9 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textColor="@color/homeText"
-            android:transitionName="homeBottomText"
+            android:transitionName="foundText"
             android:textSize="50sp"
-            android:id="@+id/homeBottomText" />
+            android:id="@+id/foundText" />
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"

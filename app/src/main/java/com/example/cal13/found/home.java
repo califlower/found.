@@ -8,11 +8,8 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
-import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
-
-import static android.R.attr.transitionName;
 
 public class home extends AppCompatActivity {
 
@@ -23,6 +20,8 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         FloatingActionButton found = (FloatingActionButton) findViewById(R.id.found_fab);
+        FloatingActionButton lost = (FloatingActionButton) findViewById(R.id.lost_fab);
+
         Button settings= (Button) findViewById(R.id.settings);
 
         found.setOnClickListener(new View.OnClickListener()
@@ -31,11 +30,34 @@ public class home extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent i = new Intent(home.this, found.class);
-                View s = findViewById(R.id.homeBottomText);
-                String t = findViewById(R.id.homeBottomText).getTransitionName();
+                View s = findViewById(R.id.foundText);
+                String t = findViewById(R.id.foundText).getTransitionName();
 
                 View f = findViewById(R.id.found_fab);
                 String tf= findViewById(R.id.found_fab).getTransitionName();
+
+
+                Pair<View, String> p1 = Pair.create(f, tf);
+                Pair<View, String> p2 = Pair.create(s, t);
+
+
+                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this,p1, p2);
+                startActivity(i, transitionActivityOptions.toBundle());
+            }
+        });
+
+        lost.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(home.this, lost.class);
+
+                View s = findViewById(R.id.lostText);
+                String t = findViewById(R.id.lostText).getTransitionName();
+
+                View f = findViewById(R.id.lost_fab);
+                String tf= findViewById(R.id.lost_fab).getTransitionName();
 
 
                 Pair<View, String> p1 = Pair.create(f, tf);
