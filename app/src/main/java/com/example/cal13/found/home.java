@@ -20,7 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class home extends AppCompatActivity {
+public class home extends AppCompatActivity
+{
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "AnonymousAuth";
@@ -29,7 +30,8 @@ public class home extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -109,8 +111,8 @@ public class home extends AppCompatActivity {
         signInAnonymously();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        if (mAuth.getCurrentUser()!=null)
-            writeNewUser(mAuth.getCurrentUser().getUid(), "","","","","");
+        /*if (mAuth.getCurrentUser()!=null)
+            writeNewUser(mAuth.getCurrentUser().getUid(), "","","","","");*/
 
 
 

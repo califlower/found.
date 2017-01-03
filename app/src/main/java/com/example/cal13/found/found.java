@@ -2,9 +2,8 @@ package com.example.cal13.found;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Fade;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -28,11 +27,6 @@ public class found extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent i = new Intent(found.this, settings.class);
-
-                Fade fade = new Fade();
-                fade.setDuration(1000);
-                getWindow().setExitTransition(fade);
-
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(found.this).toBundle();
                 startActivity(i,b);
             }

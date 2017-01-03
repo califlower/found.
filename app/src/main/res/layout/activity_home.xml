@@ -63,7 +63,7 @@
             android:id="@+id/inbox"
             android:alpha=".25"
             android:backgroundTint="@color/colorPrimary"
-            android:background="@android:drawable/ic_dialog_email" />
+            android:background="@drawable/ic_inbox_black" />
     </RelativeLayout>
 
     <RelativeLayout
