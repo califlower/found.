@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="@color/homeText"
-        android:transitionName="homeBottomText"
+        android:transitionName="foundText"
         android:textSize="50sp"
         android:id="@+id/foundText" />
 

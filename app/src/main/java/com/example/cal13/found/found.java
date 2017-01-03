@@ -1,12 +1,16 @@
 package com.example.cal13.found;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 public class found extends AppCompatActivity
 {
@@ -17,7 +21,28 @@ public class found extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found);
         setupEnterAnimation();
+
+        Button settings = (Button) findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(found.this, settings.class);
+
+                Fade fade = new Fade();
+                fade.setDuration(1000);
+                getWindow().setExitTransition(fade);
+
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(found.this).toBundle();
+                startActivity(i,b);
+            }
+        });
+
     }
+
+
+
+
     private void setupEnterAnimation()
     {
         Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.changebounds_with_arcmotion);

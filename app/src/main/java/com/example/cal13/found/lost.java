@@ -74,8 +74,8 @@ public class lost extends AppCompatActivity {
     {
         Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
         animation.setDuration(300);
-        findViewById(R.id.activity_lost).startAnimation(animation);
-        findViewById(R.id.activity_lost).setVisibility(View.VISIBLE);
+        findViewById(R.id.activity_lost_container).startAnimation(animation);
+        findViewById(R.id.activity_lost_container).setVisibility(View.VISIBLE);
         findViewById(R.id.lost_fab).setVisibility(View.GONE);
 
 
