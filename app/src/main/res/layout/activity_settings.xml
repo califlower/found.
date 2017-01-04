@@ -112,6 +112,7 @@
         android:textSize="20sp"
         android:hint="@string/location"
         android:ems="10"
+        android:focusable="false"
         android:imeOptions="actionDone"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/foundText"

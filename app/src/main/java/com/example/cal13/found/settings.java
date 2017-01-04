@@ -1,6 +1,7 @@
 package com.example.cal13.found;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,32 +31,32 @@ public class settings extends AppCompatActivity
 {
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
+    private int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
         setupWindowAnimations();
 
         final EditText name= (EditText) findViewById(R.id.setting_name);
         final EditText email= (EditText) findViewById(R.id.setting_email);
         final EditText number = (EditText) findViewById(R.id.setting_number);
-
-
+        final EditText location = (EditText) findViewById(R.id.setting_location);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-
-
 
         TextWatcher t= new TextWatcher()
         {
             int c=0;
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
             }
 
@@ -70,7 +75,8 @@ public class settings extends AppCompatActivity
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
 
             }
         };
@@ -83,8 +89,8 @@ public class settings extends AppCompatActivity
         /*
             Saves data to FIREBASE database if possible. Displays toast with status
          */
-        final Button b = (Button) findViewById(R.id.save);
-        b.setOnClickListener(new View.OnClickListener()
+        final Button s = (Button) findViewById(R.id.save);
+        s.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -116,7 +122,7 @@ public class settings extends AppCompatActivity
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
-                    b.setVisibility(View.GONE);
+                    s.setVisibility(View.GONE);
 
                 }
                 else
@@ -160,9 +166,49 @@ public class settings extends AppCompatActivity
             }
         });
 
+        Button b = (Button) findViewById(R.id.back);
+        b.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+
+        location.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                try
+                {
+                    startActivityForResult(builder.build(settings.this), PLACE_PICKER_REQUEST);
+
+
+                }
+                catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PLACE_PICKER_REQUEST)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                Place place = PlacePicker.getPlace(getApplicationContext(),data);
+                EditText location = (EditText) findViewById(R.id.setting_location);
+                location.setText(place.getAddress());
+            }
+        }
+    }
 
     private void setupWindowAnimations()
     {
@@ -179,4 +225,6 @@ public class settings extends AppCompatActivity
         User user = new User(name, email, number, location, distance);
         mDatabase.child("users").child(userId).setValue(user);
     }
+
+
 }
