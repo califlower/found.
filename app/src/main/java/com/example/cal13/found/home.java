@@ -65,60 +65,17 @@ public class home extends AppCompatActivity
 
         Button settings = (Button) findViewById(R.id.settings);
 
-        found.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(home.this, found.class);
-                View s = findViewById(R.id.foundText);
-                String t = findViewById(R.id.foundText).getTransitionName();
+        found.setOnClickListener(foundListener());
 
-                View f = findViewById(R.id.found_fab);
-                String tf = findViewById(R.id.found_fab).getTransitionName();
+        lost.setOnClickListener(foundListener());
 
+        settings.setOnClickListener(settingsListener());
 
-                Pair<View, String> p1 = Pair.create(f, tf);
-                Pair<View, String> p2 = Pair.create(s, t);
-
-
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this, p1, p2);
-                startActivity(i, transitionActivityOptions.toBundle());
-            }
-        });
-
-        lost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(home.this, lost.class);
-
-                View s = findViewById(R.id.lostText);
-                String t = findViewById(R.id.lostText).getTransitionName();
-
-                View f = findViewById(R.id.lost_fab);
-                String tf = findViewById(R.id.lost_fab).getTransitionName();
-
-
-                Pair<View, String> p1 = Pair.create(f, tf);
-                Pair<View, String> p2 = Pair.create(s, t);
-
-
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this, p1, p2);
-                startActivity(i, transitionActivityOptions.toBundle());
-            }
-        });
-
-        settings.setOnClickListener(new View.OnClickListener()
+        mAuthListener = new FirebaseAuth.AuthStateListener()
         {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(home.this, settings.class);
-                Bundle b = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this).toBundle();
-                startActivity(i, b);
-            }
-        });
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -133,19 +90,10 @@ public class home extends AppCompatActivity
         signInAnonymously();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        /*if (mAuth.getCurrentUser()!=null)
-            writeNewUser(mAuth.getCurrentUser().getUid(), "","","","","");*/
-
-
-
     }
 
-    private void writeNewUser(String userId, String name, String email, String number, String location, String distance) {
-        User user = new User(name, email, number, location, distance);
-        mDatabase.child("users").child(userId).setValue(user);
-    }
-
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
@@ -153,13 +101,15 @@ public class home extends AppCompatActivity
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuthListener != null)
+        {
             mAuth.removeAuthStateListener(mAuthListener);
         }
 
     }
 
-    private void signInAnonymously() {
+    private void signInAnonymously()
+    {
 
         // [START signin_anonymously]
         mAuth.signInAnonymously()
@@ -179,6 +129,73 @@ public class home extends AppCompatActivity
                     }
                 });
         // [END signin_anonymously]
+    }
+    private View.OnClickListener foundListener()
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i = new Intent(home.this, found.class);
+                View s = findViewById(R.id.foundText);
+                String t = findViewById(R.id.foundText).getTransitionName();
+
+                View f = findViewById(R.id.found_fab);
+                String tf = findViewById(R.id.found_fab).getTransitionName();
+
+
+                Pair<View, String> p1 = Pair.create(f, tf);
+                Pair<View, String> p2 = Pair.create(s, t);
+
+
+                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this, p1, p2);
+                startActivity(i, transitionActivityOptions.toBundle());
+            }
+        };
+
+        return v;
+    }
+    private View.OnClickListener lostListener()
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i = new Intent(home.this, lost.class);
+
+                View s = findViewById(R.id.lostText);
+                String t = findViewById(R.id.lostText).getTransitionName();
+
+                View f = findViewById(R.id.lost_fab);
+                String tf = findViewById(R.id.lost_fab).getTransitionName();
+
+
+                Pair<View, String> p1 = Pair.create(f, tf);
+                Pair<View, String> p2 = Pair.create(s, t);
+
+
+                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this, p1, p2);
+                startActivity(i, transitionActivityOptions.toBundle());
+            }
+        };
+
+        return v;
+    }
+    private View.OnClickListener settingsListener()
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i = new Intent(home.this, settings.class);
+                Bundle b = ActivityOptionsCompat.makeSceneTransitionAnimation(home.this).toBundle();
+                startActivity(i, b);
+            }
+        };
+        return v;
     }
 
 }
