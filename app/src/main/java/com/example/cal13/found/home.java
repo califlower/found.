@@ -1,5 +1,6 @@
 package com.example.cal13.found;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kishan.askpermission.AskPermission;
+import com.kishan.askpermission.PermissionCallback;
 
 public class home extends AppCompatActivity
 {
@@ -34,6 +37,25 @@ public class home extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        new AskPermission.Builder(this)
+                .setPermissions(android.Manifest.permission.GET_ACCOUNTS, Manifest.permission.INTERNET)
+                .setCallback(new PermissionCallback()
+                {
+                    @Override
+                    public void onPermissionsGranted(int requestCode)
+                    {
+
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(int requestCode)
+                    {
+
+                    }
+                })
+                .request(20);
+
 
         mAuth = FirebaseAuth.getInstance();
 

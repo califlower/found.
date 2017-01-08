@@ -43,100 +43,29 @@ public class settings extends AppCompatActivity
 
         setupWindowAnimations();
 
-        final EditText name= (EditText) findViewById(R.id.setting_name);
-        final EditText email= (EditText) findViewById(R.id.setting_email);
+        final EditText name = (EditText) findViewById(R.id.setting_name);
+        final EditText email = (EditText) findViewById(R.id.setting_email);
         final EditText number = (EditText) findViewById(R.id.setting_number);
         final EditText location = (EditText) findViewById(R.id.setting_location);
+        final Button b = (Button) findViewById(R.id.back);
+        final Button saveButton = (Button) findViewById(R.id.save);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        TextWatcher t= new TextWatcher()
-        {
-            int c=0;
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if (c>2)
-                {
-
-                    Button b = (Button) findViewById(R.id.save);
-                    b.setVisibility(View.VISIBLE);
-                }
-                else
-                    c++;
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-
-            }
-        };
-
-        name.addTextChangedListener(t);
-        email.addTextChangedListener(t);
-        number.addTextChangedListener(t);
+        name.addTextChangedListener(saveVisibility(saveButton));
+        email.addTextChangedListener(saveVisibility(saveButton));
+        number.addTextChangedListener(saveVisibility(saveButton));
 
 
         /*
             Saves data to FIREBASE database if possible. Displays toast with status
          */
-        final Button s = (Button) findViewById(R.id.save);
-        s.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                View f = settings.this.getCurrentFocus();
 
-                //Hides keyboard so that it doesn't block things when saving
+        saveButton.setOnClickListener(saveButtonListener(saveButton, name, email, number));
+        location.setOnClickListener(locationListener(location));
 
-                if (f != null)
-                {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(f.getWindowToken(), 0);
-                }
-
-                //Makes sure data is able to be saved
-
-                if (mAuth!=null && mAuth.getCurrentUser()!=null)
-                {
-                    writeNewUser(
-                            mAuth.getCurrentUser().getUid(),
-                            name.getText().toString(),
-                            email.getText().toString(),
-                            number.getText().toString(),
-                            "",
-                            "");
-                    Context context = getApplicationContext();
-                    CharSequence text = "Data saved successfully";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                    s.setVisibility(View.GONE);
-
-                }
-                else
-                {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Data could not be saved";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-
-
-            }
-        });
 
         mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener()
         {
@@ -145,16 +74,17 @@ public class settings extends AppCompatActivity
             {
                 User u = dataSnapshot.getValue(User.class);
 
-                if (u!=null)
+                if (u != null)
                 {
-                    if (name.getText().toString().compareTo(u.name)!=0)
-                        name.setText(u.name);
+                    if (name.getText().toString().compareTo(u.getName()) != 0)
+                        name.setText(u.getName());
 
-                    if (email.getText().toString().compareTo(u.email)!=0)
-                        email.setText(u.email);
+                    if (email.getText().toString().compareTo(u.getEmail()) != 0)
+                        email.setText(u.getEmail());
 
-                    if (number.getText().toString().compareTo(u.number)!=0)
-                        number.setText(u.number);
+
+                    if (number.getText().toString().compareTo(u.getNumber()) != 0)
+                        number.setText(u.getNumber());
 
                 }
             }
@@ -166,7 +96,6 @@ public class settings extends AppCompatActivity
             }
         });
 
-        Button b = (Button) findViewById(R.id.back);
         b.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -176,34 +105,16 @@ public class settings extends AppCompatActivity
             }
         });
 
-        location.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-                try
-                {
-                    startActivityForResult(builder.build(settings.this), PLACE_PICKER_REQUEST);
-
-
-                }
-                catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
 
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == PLACE_PICKER_REQUEST)
         {
             if (resultCode == RESULT_OK)
             {
-                Place place = PlacePicker.getPlace(getApplicationContext(),data);
+                Place place = PlacePicker.getPlace(getApplicationContext(), data);
                 EditText location = (EditText) findViewById(R.id.setting_location);
                 location.setText(place.getAddress());
             }
@@ -220,11 +131,112 @@ public class settings extends AppCompatActivity
 
     }
 
-    private void writeNewUser(String userId, String name, String email, String number, String location, String distance)
+    private TextWatcher saveVisibility(final Button save)
     {
-        User user = new User(name, email, number, location, distance);
-        mDatabase.child("users").child(userId).setValue(user);
+        TextWatcher t = new TextWatcher()
+        {
+            int c = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if (c > 2)
+                {
+                    save.setVisibility(View.VISIBLE);
+                } else
+                    c++;
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        };
+
+        return t;
     }
 
+    private View.OnClickListener saveButtonListener(final Button save, final EditText name, final EditText email, final EditText number)
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                View f = settings.this.getCurrentFocus();
+
+                //Hides keyboard so that it doesn't block things when saving
+
+                if (f != null)
+                {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(f.getWindowToken(), 0);
+                }
+
+                //Makes sure data is able to be saved
+
+                if (mAuth != null && mAuth.getCurrentUser() != null)
+                {
+                    User u = new User(mDatabase, mAuth);
+                    u.setName(name.getText().toString());
+                    u.setEmail(email.getText().toString());
+                    u.setNumber(number.getText().toString());
+
+                    u.writeToDatabase();
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Data saved successfully";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    save.setVisibility(View.GONE);
+
+                } else
+                {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Data could not be saved";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+
+            }
+
+        };
+
+        return v;
+    }
+
+    private View.OnClickListener locationListener(final EditText location)
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                try
+                {
+                    startActivityForResult(builder.build(settings.this), PLACE_PICKER_REQUEST);
+
+
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        return v;
+    }
 
 }
