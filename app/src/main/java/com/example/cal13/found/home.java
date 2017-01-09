@@ -25,10 +25,11 @@ import com.kishan.askpermission.PermissionCallback;
 
 public class home extends AppCompatActivity
 {
-    private FirebaseAuth mAuth;
+    private FirebaseAuth authToken;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "AnonymousAuth";
-    private DatabaseReference mDatabase;
+    private DatabaseReference database;
+
 
 
 
@@ -38,72 +39,38 @@ public class home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        new AskPermission.Builder(this)
-                .setPermissions(android.Manifest.permission.GET_ACCOUNTS, Manifest.permission.INTERNET)
-                .setCallback(new PermissionCallback()
-                {
-                    @Override
-                    public void onPermissionsGranted(int requestCode)
-                    {
+        final FloatingActionButton found = (FloatingActionButton) findViewById(R.id.found_fab);
+        final FloatingActionButton lost = (FloatingActionButton) findViewById(R.id.lost_fab);
+        final Button settings = (Button) findViewById(R.id.settings);
 
-                    }
-
-                    @Override
-                    public void onPermissionsDenied(int requestCode)
-                    {
-
-                    }
-                })
-                .request(20);
-
-
-        mAuth = FirebaseAuth.getInstance();
-
-
-        FloatingActionButton found = (FloatingActionButton) findViewById(R.id.found_fab);
-        FloatingActionButton lost = (FloatingActionButton) findViewById(R.id.lost_fab);
-
-        Button settings = (Button) findViewById(R.id.settings);
+        askPermission();
 
         found.setOnClickListener(foundListener());
-
         lost.setOnClickListener(foundListener());
-
         settings.setOnClickListener(settingsListener());
 
-        mAuthListener = new FirebaseAuth.AuthStateListener()
-        {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-            {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
 
+        authToken = FirebaseAuth.getInstance();
+        mAuthListener = authenticationListener();
         signInAnonymously();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference();
+
 
     }
 
     public void onStart()
     {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        authToken.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
         if (mAuthListener != null)
         {
-            mAuth.removeAuthStateListener(mAuthListener);
+            authToken.removeAuthStateListener(mAuthListener);
         }
 
     }
@@ -112,7 +79,7 @@ public class home extends AppCompatActivity
     {
 
         // [START signin_anonymously]
-        mAuth.signInAnonymously()
+        authToken.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -197,5 +164,49 @@ public class home extends AppCompatActivity
         };
         return v;
     }
+
+    private void askPermission()
+    {
+        new AskPermission.Builder(this)
+                .setPermissions(android.Manifest.permission.GET_ACCOUNTS, Manifest.permission.INTERNET)
+                .setCallback(new PermissionCallback()
+                {
+                    @Override
+                    public void onPermissionsGranted(int requestCode)
+                    {
+
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(int requestCode)
+                    {
+
+                    }
+                })
+                .request(20);
+    }
+
+    private FirebaseAuth.AuthStateListener authenticationListener()
+    {
+        FirebaseAuth.AuthStateListener f = new FirebaseAuth.AuthStateListener()
+        {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
+        return f;
+    }
+
+
 
 }

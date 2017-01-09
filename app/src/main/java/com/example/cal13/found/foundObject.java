@@ -2,31 +2,35 @@ package com.example.cal13.found;
 
 import android.media.Image;
 
-import com.google.android.gms.location.places.Place;
-
-import java.util.Calendar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 public class foundObject
 {
     private String title;
-    private Calendar c;
-    private Image i;
-    private Place p;
-    private String desc;
+    private long epochPosted;
+    private Image objectImage;
+    private double objectLong;
+    private double objectLat;
+    private String objectDescription;
 
-    public foundObject()
+    private DatabaseReference database;
+    private FirebaseAuth authToken;
+
+    foundObject()
     {
 
     }
-    public foundObject(String title, String desc, Place p, Image i, Calendar c)
+    foundObject(DatabaseReference newDatabase, FirebaseAuth newAuthToken)
     {
-        this.title=title;
-        this.desc=desc;
-        this.p=p;
-        this.i=i;
-        this.c=c;
+        this.title="";
+        this.epochPosted = System.currentTimeMillis()/1000;
+        this.objectLong = 0;
+        this.objectLat = 0;
+        this.objectDescription = "";
 
     }
+
 
 
 

@@ -8,8 +8,9 @@ public class User {
     private String name;
     private String email;
     private String number;
-    private String location;
-    private String distance;
+    private int distance;
+    private long latitude;
+    private long longitude;
 
     private DatabaseReference database;
     private FirebaseAuth authToken;
@@ -19,78 +20,90 @@ public class User {
 
     }
 
-    public User(DatabaseReference newDatabase, FirebaseAuth newAuthToken)
+    User(DatabaseReference newDatabase, FirebaseAuth newAuthToken)
     {
         this.name = "";
         this.email = "";
         this.number = "";
-        this.location = "";
-        this.distance = "";
+        this.distance = 5;
+        this.latitude = 0;
+        this.longitude =0;
 
         database = newDatabase;
         authToken = newAuthToken;
     }
 
-    public void setName(String newName)
+    void setName(String newName)
     {
         name = newName;
     }
 
-    public void setEmail(String newEmail)
+    void setEmail(String newEmail)
     {
         email = newEmail;
     }
 
-    public void setNumber(String newNumber)
+    void setNumber(String newNumber)
     {
         number = newNumber;
     }
 
-    public void setLocation(String newLocation)
-    {
-        location = newLocation;
-    }
-
-    public void setDistance(String newDistance)
+    void setDistance(int newDistance)
     {
         distance = newDistance;
     }
 
-    public void setDatabase(DatabaseReference newDatabase)
+    void setDatabase(DatabaseReference newDatabase)
     {
         database = newDatabase;
     }
-    public void setAuthToken(FirebaseAuth newAuthToken)
+
+    void setAuthToken(FirebaseAuth newAuthToken)
     {
         authToken = newAuthToken;
     }
 
-    public String getName()
+    String getName()
     {
         return name;
     }
 
-    public String getEmail()
+    String getEmail()
     {
         return email;
     }
 
-    public String getDistance()
+    int getDistance()
     {
         return distance;
     }
 
-    public String getLocation()
+    void setLatitude(long latitude)
     {
-        return location;
+        this.latitude = latitude;
     }
 
-    public String getNumber()
+    void setLongitude(long longitude)
+    {
+        this.longitude = longitude;
+    }
+
+    long getLatitude()
+    {
+        return latitude;
+    }
+
+    long getLongitude()
+    {
+        return longitude;
+    }
+
+    String getNumber()
     {
         return number;
     }
 
-    public boolean writeToDatabase()
+    boolean writeToDatabase()
     {
 
         if (authToken.getCurrentUser() == null)

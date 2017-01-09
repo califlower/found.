@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -26,6 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.util.Locale;
 
 public class settings extends AppCompatActivity
 {
@@ -67,44 +71,8 @@ public class settings extends AppCompatActivity
         location.setOnClickListener(locationListener(location));
 
 
-        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                User u = dataSnapshot.getValue(User.class);
-
-                if (u != null)
-                {
-                    if (name.getText().toString().compareTo(u.getName()) != 0)
-                        name.setText(u.getName());
-
-                    if (email.getText().toString().compareTo(u.getEmail()) != 0)
-                        email.setText(u.getEmail());
-
-
-                    if (number.getText().toString().compareTo(u.getNumber()) != 0)
-                        number.setText(u.getNumber());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-
-            }
-        });
-
-        b.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                finish();
-            }
-        });
-
+        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(databaseListener(name, email,number, location));
+        b.setOnClickListener(backListener());
 
     }
 
@@ -198,7 +166,8 @@ public class settings extends AppCompatActivity
 
                     save.setVisibility(View.GONE);
 
-                } else
+                }
+                else
                 {
                     Context context = getApplicationContext();
                     CharSequence text = "Data could not be saved";
@@ -233,6 +202,72 @@ public class settings extends AppCompatActivity
                 {
                     e.printStackTrace();
                 }
+            }
+        };
+
+        return v;
+    }
+    private ValueEventListener databaseListener(final EditText name, final EditText email, final EditText number, final EditText location)
+    {
+        ValueEventListener v = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                User u = dataSnapshot.getValue(User.class);
+
+                if (u != null)
+                {
+                    if (name.getText().toString().compareTo(u.getName()) != 0)
+                        name.setText(u.getName());
+
+                    if (email.getText().toString().compareTo(u.getEmail()) != 0)
+                        email.setText(u.getEmail());
+
+
+                    if (number.getText().toString().compareTo(u.getNumber()) != 0)
+                        number.setText(u.getNumber());
+
+                    Geocoder g = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                    try
+                    {
+                        if (g.getFromLocation(u.getLatitude(),u.getLongitude(),1).isEmpty())
+                            location.setText("Your Location");
+
+                        else if (location.getText().toString().compareTo(g.getFromLocation(u.getLatitude(),u.getLongitude(),1).get(0).getPostalCode())!=0)
+                            location.setText(g.getFromLocation(u.getLatitude(),u.getLongitude(),1).get(0).getPostalCode());
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                        location.setText("Location not found");
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+
+        };
+
+        return v;
+    }
+
+    private View.OnClickListener backListener()
+    {
+        View.OnClickListener v = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                finish();
             }
         };
 
