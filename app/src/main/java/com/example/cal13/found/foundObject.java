@@ -1,21 +1,19 @@
 package com.example.cal13.found;
 
-import android.media.Image;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-public class foundObject
+class foundObject
 {
-    private String title;
-    private long epochPosted;
-    private Image objectImage;
-    private double objectLong;
-    private double objectLat;
-    private String objectDescription;
+    String title;
+    long epochPosted;
+    String objectImage;
+    double objectLong;
+    double objectLat;
+    String objectDescription;
 
-    private DatabaseReference database;
-    private FirebaseAuth authToken;
+    DatabaseReference database;
+    FirebaseAuth authToken;
 
     foundObject()
     {
@@ -28,6 +26,7 @@ public class foundObject
         this.objectLong = 0;
         this.objectLat = 0;
         this.objectDescription = "";
+        this.objectImage = "";
 
     }
 

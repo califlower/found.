@@ -3,7 +3,7 @@ package com.example.cal13.found;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-public class User {
+class User {
 
     private String name;
     private String email;

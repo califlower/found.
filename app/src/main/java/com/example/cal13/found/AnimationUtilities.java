@@ -5,20 +5,16 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-/**
- * Created by cal13 on 1/2/2017.
- */
-public class AnimationUtilities
+
+
+class AnimationUtilities
 {
 
 
-    public static void animateRevealShow(final Context ctx, final View view, final int startRadius,
+    static void animateRevealShow(final Context ctx, final View view, final int startRadius,
                                          @ColorRes final int color, int x, int y, final OnRevealAnimationListener listener)
     {
         float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());

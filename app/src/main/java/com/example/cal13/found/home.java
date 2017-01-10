@@ -28,7 +28,7 @@ public class home extends AppCompatActivity
     private FirebaseAuth authToken;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "AnonymousAuth";
-    private DatabaseReference database;
+    DatabaseReference database;
 
 
 
@@ -78,7 +78,7 @@ public class home extends AppCompatActivity
     private void signInAnonymously()
     {
 
-        // [START signin_anonymously]
+
         authToken.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -95,11 +95,12 @@ public class home extends AppCompatActivity
                         }
                     }
                 });
-        // [END signin_anonymously]
+
     }
     private View.OnClickListener foundListener()
     {
         View.OnClickListener v = new View.OnClickListener()
+
         {
             @Override
             public void onClick(View view)
