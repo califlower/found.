@@ -1,0 +1,28 @@
+apiVersion: apps.twilio.com/v1alpha1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: otk-namespace-provisioner
+  annotations:
+    kubernetes.twilio.com/delete-protection: true
+  name: dsaasdasd
+spec:
+  admins:
+    - team_api
+  clusterSelector:
+    matchExpressions:
+      - key: class
+        operator: In
+        values:
+          - edge
+      - key: infra-boundary
+        operator: In
+        values:
+          - otk-mgmt-twilio
+  # if enabled is set to false, namespace and argo project won't be created
+  enabled: true
+  owner: team_api
+  quotas:
+    default:
+      requests.cpu: 100
+      requests.memory: 100Gi
